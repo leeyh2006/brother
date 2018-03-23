@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/test.css" rel="stylesheet" type="text/css">
+
+    <script src="/controller/loginController.js"></script>
+    <script src="/service/loginService.js"></script>
+
+
+</head>
+<body ng-app ='app'>
+<div class="logo"></div>
+    <div class="login-block" ng-controller="loginController">
+        <form ng-submit="loginCheck()" >
+            <h1>로그인</h1>
+            <input type="email" value="" placeholder="이메일" ng-model="username" />
+            <input type="password" value="" placeholder="비밀번호" ng-model="password" />
+            <button type="submit">로그인</button>
+        </form>
+    </div>
+
+</body>
+</html>

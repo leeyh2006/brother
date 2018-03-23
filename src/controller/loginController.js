@@ -1,8 +1,11 @@
-app.controller('loginController',['$scope' , function($scope){
+
+
+app.controller('loginController',['$scope' ,'loginService', function($scope,loginService){
     $scope.testText = 'hello World';
-
-    $scope.login= function(){
-        alert('test');
-
+    $scope.loginCheck=function(){
+        loginService.loginCheck('data').then(function(resultData){
+            console.log('come in');
+            $scope.dataStr=resultData;
+        });
     }
 }]);

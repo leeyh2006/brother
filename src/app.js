@@ -1,4 +1,4 @@
-var app = angular.module('app',['ngRoute']);
+var app = angular.module('app',['ngRoute','cp.ngConfirm']);
 
 
 app.config(function ($routeProvider) {

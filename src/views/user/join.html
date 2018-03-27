@@ -14,6 +14,13 @@
 <div class="login-block" ng-controller="joinController">
     <form ng-submit="join()" >
         <h1>회원가입</h1>
+        <input type="text" placeholder="이메일" ng-model="user.userId" />
+        <input type="password" placeholder="비밀번호" ng-model="user.userPw" />
+        <input type="password" placeholder="비밀번호 확인" ng-model="user.userPwCheck"/>
+        <input type="tel" placeholder="전화 번호" ng-model="user.userTel"/>
+        <input type="text" placeholder="주소" ng-model="user.userAd"/>
+        <button type="submit">회원가입</button>
+        <button type="button" ng-click="cancel()">취소 </button>
     </form>
 </div>
 </body>

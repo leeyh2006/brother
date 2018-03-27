@@ -13,12 +13,14 @@ router.post('/loginCheck.json', function(req, res, next) {
 
     connection.query(sql,function(err,rows,fields){
         if(!err){
-
-            console.log('the solution i s : ' + rows[0].USERID);
-            res.send(rows[0].USERID);
+            res.send(rows);
+            console.log('user info searched');
         }
         else
+        {
             console.log(err);
+            res.send("fail");
+        }
 
     });
 

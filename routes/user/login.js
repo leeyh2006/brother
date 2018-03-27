@@ -3,17 +3,25 @@ var router = express.Router();
 var connection  = require('../../src/dbCon.js');
 
 router.post('/loginCheck.json', function(req, res, next) {
+    var receiveData = req.body;
 
-    connection.query('SELECT * FROM USER ',function(err,rows,fields){
+    var sql =
+        "SELECT USERID" +
+        "  FROM USER  " +
+        " WHERE USERID = " +"'"+receiveData.userId+"'"+
+        "   AND USERPW = " +"'"+ receiveData.userPw+"'";
+
+    connection.query(sql,function(err,rows,fields){
         if(!err){
-            console.dir(req.body.data);
-            console.log('the solution i s : ' + rows);
+
+            console.log('the solution i s : ' + rows[0].USERID);
+            res.send(rows[0].USERID);
         }
         else
-            console.log('error');
+            console.log(err);
 
     });
-    res.send(res.data);
+
 });
 
 module.exports = router;

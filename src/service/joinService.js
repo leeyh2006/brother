@@ -1,16 +1,14 @@
-app.factory('loginService',function ($http) {
+app.factory('joinService',function ($http) {
     return {
-        loginCheck:
+        join:
             function(sendData){
-
                 return $http({
                     method:'POST',
-                    url:'http://localhost:8080/login'+'/loginCheck.json',
+                    url:'http://localhost:8080/login'+'/join.json',
                     data: sendData
                 }).then(function(data,status,headers,config)
                 {
-                    console.dir(sendData);
-                    console.log('login Service is succes');
+                    console.log('join Service is succes');
                 }).error(
                     function(data,status,headers,config){
                         console.log('error');

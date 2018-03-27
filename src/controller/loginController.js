@@ -10,19 +10,17 @@ app.controller('loginController',['$scope' ,'loginService', function($scope,logi
       location.href='#!join';
     };
 
-
-
     $scope.loginCheck=function(){
         loginService.loginCheck($scope.user).then(function(resultData){
-            console.dir(resultData)
-            if(resultData != '') {
-                alert('로그인 성공 !');
+            if(resultData.data[0].COUNT ==1){
+                alert('로그인 성공');
+                console.log('[CONTROLLER] LOGIN CONTROLLER RESULT =  '+resultData.data );
             }
-            else{
+            else {
                 alert('로그인 실패');
+                console.log('[CONTROLLER] LOGIN CONTROLLER RESULT =  '+resultData.data );
             }
-            $scope.dataStr=resultData;
         });
-        console.log('user Id Check');
+
     }
 }]);

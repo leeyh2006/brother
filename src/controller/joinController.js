@@ -1,5 +1,6 @@
 
 app.controller('joinController',['$scope' ,'$ngConfirm','joinService', function($scope,$ngConfirm,joinService){
+
     $scope.user = {
         userId: $scope.userId,
         userPw : $scope.userPw,
@@ -7,6 +8,7 @@ app.controller('joinController',['$scope' ,'$ngConfirm','joinService', function(
         userTel : $scope.userTel,
         userAd : $scope.userAd
     };
+
     $scope.cancel =function(){
         $ngConfirm({
             title:false,
@@ -26,11 +28,27 @@ app.controller('joinController',['$scope' ,'$ngConfirm','joinService', function(
         });
     };
 
-
     $scope.join=function(){
-        joinService.join($scope.user).then(function(resultData){
-            $scope.dataStr=resultData;
-        });
+        $ngConfirm(
+            {
+                title:false,
+                content: '회원 가입 하시겠습니까?',
+                buttons: {
+                    ok: {
+                        text:'예',
+                        action:function () {
+                            joinService.join($scope.user).then(function(resultData){
+                                $scope.dataStr=resultData;
+                            });
+                        }
+                    },
+                    cancel:{
+                        text:'아니오',
+                    }
+                }
+
+            }
+        );
         console.log('join Service start');
     }
 }]);

@@ -4,10 +4,12 @@ app.factory('loginService',function ($http) {
             function(sendData){
                 return $http({
                     method:'POST',
-                    url:'http://192.168.6.122:8080/login'+'/loginCheck.json',
+                    url:'http://localhost:8080/login'+'/loginCheck.json',
+                    data: sendData
                 }).then(function(data,status,headers,config)
                 {
-                    console.log('succes');
+                    console.dir(data);
+                    console.log('login Service is succes');
                 }).error(
                     function(data,status,headers,config){
                         console.log('error');

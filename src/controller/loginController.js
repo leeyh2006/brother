@@ -23,4 +23,10 @@ app.controller('loginController',['$scope' ,'loginService', function($scope,logi
         });
 
     }
+
+    $scope.kakaoLogin=function () {
+        var data = loginService.kakaoLogin();
+        console.log('kakao data = ' + data);
+
+    }
 }]);

@@ -6,6 +6,8 @@
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link href="/assets/css/test.css" rel="stylesheet" type="text/css">
 
+
+
     <script src="/controller/loginController.js"></script>
     <script src="/service/loginService.js"></script>
 
@@ -18,9 +20,40 @@
             <input type="email" value="" placeholder="이메일" ng-model="user.userId" />
             <input type="password" value="" placeholder="비밀번호" ng-model="user.userPw" />
             <button type="submit">로그인</button>
+
             <button type="button" ng-click="joinPage()">회원가입</button>
+            <p></p>
+                <a id ="custom-login-kakao-btn" href="http://localhost:8080/login/kakaoLogin">
+                    <img src="/assets/img/btn/kakao_login_btn.png" height="40" width="200" style="margin-left: 45px;"/>
+                </a>
+                <a id ="custom-login-naver-btn" href="#">
+                    <img src="/assets/img/btn/naver_login_btn.png" height="40" width="200" style="margin-left: 45px;"/>
+                </a>
+
+                <div class ="loing-block copyRight">
+                    Copyright © 2018 YongHee Inc. All rights reserved.
+                </div>
+
         </form>
     </div>
 
+
+<script type='text/javascript'>
+    //<![CDATA[
+    Kakao.init('a81ba60b242cd4896844c5fb30077271');
+    function loginWithKakao() {
+        // 로그인 창을 띄웁니다.
+        Kakao.Auth.login({
+            success: function(authObj) {
+                alert('login 성공');
+                console.log(JSON.stringify(authObj))
+            },
+            fail: function(err) {
+                alert(JSON.stringify(err));
+            }
+        });
+    };
+    //]]>
+</script>
 </body>
 </html>

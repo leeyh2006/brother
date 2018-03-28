@@ -2,14 +2,14 @@ var mysql= require('mysql');
 var db_config = require('../serverConfig.js');
 
 
-var connection = mysql.createConnection(
+var pool = mysql.createPool(
     {
         host : db_config.host,
         user : db_config.user,
         password : db_config.password,
-        database : db_config.database
+        database : db_config.database,
+        connectionLimit:20,
+        waitForConnections:false
     }
 );
-connection.connect();
-
-module.exports= connection;
+module.exports=pool;

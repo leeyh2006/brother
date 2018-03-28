@@ -4,11 +4,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport =require('passport');
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/user/login');
 var join = require('./routes/user/join');
+var test = require('./routes/success');
+var oauth =require('./routes/user/oauth');
 
 var app = express();
 
@@ -32,7 +36,11 @@ app.use('/', index);
 app.use('/login',login);
 app.use('/users', users);
 app.use('/join',join);
+app.use('/test',test);
+app.use('/',oauth);
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -40,6 +48,7 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {

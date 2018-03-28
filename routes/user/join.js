@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var pool  = require('../../src/dbCon.js');
 
+
 router.post('/join.json', function(req, res, next) {
 
     var receiveData = req.body;

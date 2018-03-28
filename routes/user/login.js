@@ -6,20 +6,24 @@ router.post('/loginCheck.json', function(req, res, next) {
     var receiveData = req.body;
 
     var sql =
-        "SELECT USERID" +
+        "SELECT COUNT(*) AS COUNT" +
         "  FROM USER  " +
         " WHERE USERID = " +"'"+receiveData.userId+"'"+
         "   AND USERPW = " +"'"+ receiveData.userPw+"'";
 
     connection.query(sql,function(err,rows,fields){
         if(!err){
-            res.send(rows);
-            console.log('user info searched');
+            if(rows[0].COUNT == 1 ){
+                res.send(rows);
+            }
+            else{
+                res.send("fail");
+            }
+            console.log("[DEBUG] USER INFO SEARCHED " + rows[0].COUNT);
         }
         else
         {
-            console.log(err);
-            res.send("fail");
+            res.send(err);
         }
 
     });

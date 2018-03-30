@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session')
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -11,7 +12,6 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/user/login');
 var join = require('./routes/user/join');
-var test = require('./routes/success');
 var oauth =require('./routes/user/oauth');
 
 var app = express();
@@ -31,7 +31,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname,'src')));
 
+app.use(session({
+    key:'sid',
+    secret:'secret',
+    cookie:{
+        maxAge:1000* 60 * 60
+    }
 
+}))
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -40,7 +47,6 @@ app.use('/', index);
 app.use('/login',login);
 app.use('/users', users);
 app.use('/join',join);
-app.use('/test',test);
 
 // app.use('/oauth',oauth);
 

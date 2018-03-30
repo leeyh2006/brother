@@ -38,10 +38,8 @@ router.get('/oauth', passport.authenticate('login-kakao', {
     res.redirect('/login/login_success');
 });
 
-router.get('/login_success',function(req,res){
-    console.log(req);
-    res.send(req.user);
-
+router.get('/login_success',ensureAuthenticated,function(req,res){
+    res.redirect('/');
 });
 
 router.get('/login/login_fail',function (req,res,next) {

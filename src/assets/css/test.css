@@ -97,3 +97,9 @@ body {
     -moz-background-size: auto;
     font-size: 13px;
 }
+.login-block .kakao {
+    margin-top: 50px;
+    text-align: center;
+    -moz-background-size: auto;
+    font-size: 13px;
+}

@@ -1,9 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var pool  = require('../../src/dbCon.js');
-var passport =require('passport');
-var KakaoStrategy =require('passport-kakao').Strategy;
-;
+var express         = require('express');
+var router          = express.Router();
+var pool            = require('../../src/dbCon.js');
+var passport        = require('passport');
+var KakaoStrategy   = require('passport-kakao').Strategy;
+var LocalStrategy   = require('passport-local').Strategy;
+var pbkdf2_password = require('pbkdf2-password ');
+
+/*
 passport.use('login-kakao',new KakaoStrategy({
         clientID: '8a31ef866bfe1f9c93006c6bfda573f7',
         callbackURL :'http://localhost:8080/login/oauth'
@@ -13,41 +16,120 @@ passport.use('login-kakao',new KakaoStrategy({
         return done(null,profile);
 
     }
+));*/
+
+
+
+/* passport Local 정보 셋팅 */
+passport.use(new LocalStrategy(
+    function(username,password,done){
+        var salt = 'leeyonghee!@#!@$!@$';
+        var  userid  = username
+            ,userpw = sha256(password+salt);
+        var sql =
+            "SELECT USERNAME," +
+            "       USERPW " +
+            "  FROM USER  " +
+            " WHERE USERID = ? " +
+            "   AND USERPW = ? ";
+        pool.getConnection(function(err,connection){
+            var query= connection.query(sql,[userid,userpw],function(err,rows,fields){
+                if(err){
+                    connection.release();
+                    throw err;
+                }
+                //사용자 맞을시
+                if(rows[0].USERNAME !=undefined){
+                    console.log(query.sql);
+                    console.log('rows[0]',rows[0]);
+                    done(null, rows[0]);
+                }
+                else{
+                    console.log(err);
+                    done(null,false); //회원 정보가 없을시
+                }
+                connection.release();
+            });
+        });
+        // done(null,false);
+    }
 ));
 
+/*  passport local 로그인 */
+router.post(
+    '/login',
+    passport.authenticate(
+        'local',
+        {
+            successRedirect:'/',
+            failureRedirect:'/login'
+        }
+    )
+
+);
+
+passport.serializeUser(function(user,done){
+    console.log('[serializeUser]', user);
+     done(null,user);
+});
+
+
+// 다음 페이지에서 들어올때 정보 저장
+passport.deserializeUser(function(id,done){
+    console.log ('deserializeUser' ,id)
+     done(null,id);
+
+});
+
+/*
 // 카카오 프로필 세션 저장
 passport.serializeUser(function(user,done){
-    console.log('kakao serialize');
     // console.log(user);
     done(null,user);
 
-});
+});*/
 
+
+/*
 passport.deserializeUser(function(user,done){
     console.log('kakao desialize');
     done(null,user);
-});
-/* ***************** */
-
-/* kakao oauth 로그인 */
+});*/
+/*
+* */
+/*
+/!* kakao oauth 로그인 *!/
 router.get('/kakaoLogin',passport.authenticate('login-kakao'));
 
 router.get('/oauth', passport.authenticate('login-kakao', {
     failureRedirect:'/login/login_fail'
 }),function(req,res){
-    res.redirect('/login/login_success');
-});
 
-router.get('/login_success',ensureAuthenticated,function(req,res){
-    res.redirect('/');
-});
+    var userInfo = req.user._json;
 
-router.get('/login/login_fail',function (req,res,next) {
-    console.log('kakao Login err');
-    res.render('error', { title: 'Express' });
+    var user = {
+        "USERID": "leeyh2006@nate.com",35
+        "KAKAO_MAIL": userInfo.kaccount_email,
+        "KAKAO_THUMNAIL_URL":userInfo.properties.profile_image
+    };
+    var sql2 = 'INSERT INTO USER SET ?';
+    pool.getConnection(function(err,connection){
+        var query= connection.query(sql2,user,function(err,rows,field){
+            if(err){
+                connection.release();
+                throw err;
+            }
+            console.log(query.sql);
+            res.redirect('/');
+            connection.release();
+        });
+    });
 
-});
+});*/
 
+
+
+/*
 router.post('/loginCheck.json', function(req, res, next) {
     var receiveData = req.body;
     var userid = receiveData.userId
@@ -57,7 +139,7 @@ router.post('/loginCheck.json', function(req, res, next) {
         "SELECT COUNT(*) AS COUNT" +
         "  FROM USER  " +
         " WHERE USERID = ? " +
-        "  AND USERPW = ? ";
+        "   AND USERPW = ? ";
     pool.getConnection(function(err,connection){
        var query= connection.query(sql,[userid,userpw],function(err,rows,fields){
             if(err){
@@ -75,15 +157,6 @@ router.post('/loginCheck.json', function(req, res, next) {
             console.log("[DEBUG] USER INFO SEARCHED " + rows[0].COUNT);
         });
     });
+});*/
 
-
-});
-
-function ensureAuthenticated(req, res, next) {
-    // 로그인이 되어 있으면, 다음 파이프라인으로 진행
-    if (req.isAuthenticated()) { return next(); }
-    // 로그인이 안되어 있으면, login 페이지로 진행
-    res.redirect('/');
-
-}
 module.exports = router;

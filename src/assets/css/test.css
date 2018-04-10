@@ -88,6 +88,11 @@ body {
     cursor: pointer;
 }
 
+#sns-btn  {
+
+}
+
+
 .login-block button:hover {
     background: #f5f5f5;
 }

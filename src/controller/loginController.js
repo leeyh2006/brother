@@ -1,15 +1,12 @@
 
-
 app.controller('loginController',['$scope' ,'loginService', function($scope,loginService){
-
     $scope.user = {
-        userId :$scope.userId,
-        userPw: $scope.userPw
+        userId :$scope.username,
+        userPw: $scope.password
     };
     $scope.joinPage =function(){
       location.href='#!join';
     };
-
     $scope.loginCheck=function(){
         loginService.loginCheck($scope.user).then(function(resultData){
             if(resultData.data[0].COUNT ==1){
@@ -23,9 +20,7 @@ app.controller('loginController',['$scope' ,'loginService', function($scope,logi
         });
 
     };
-    $scope.kakaoLogin=function () {
-        var data = loginService.kakaoLogin();
-        console.log('kakao data = ' + data);
-
-    }
 }]);
+
+
+console.log(sessionStorage.getItem("id"));

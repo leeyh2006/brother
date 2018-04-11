@@ -9,7 +9,7 @@ app.controller('loginController',['$scope' ,'loginService', function($scope,logi
     };
     $scope.loginCheck=function(){
         loginService.loginCheck($scope.user).then(function(resultData){
-            if(resultData.data[0].COUNT ==1){
+            if(resultData){
                 alert('로그인 성공');
                 console.log('[CONTROLLER] LOGIN CONTROLLER RESULT =  '+resultData.data );
             }

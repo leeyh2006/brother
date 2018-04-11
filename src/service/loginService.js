@@ -11,7 +11,7 @@ app.factory('loginService',function ($http) {
                 {
                     console.log('service',data);
                     console.log('login Service is succes');
-                    return data;
+                    location.href='/'
                 }).catch(
                     function(data,status,headers,config){
                         console.log('login Service error');

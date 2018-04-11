@@ -4,11 +4,12 @@ app.factory('joinService',function ($http) {
             function(sendData){
                 return $http({
                     method:'POST',
-                    url:'http://localhost:8080/join'+'/join.json',
+                    url:'/join/join.json',
                     data: sendData
                 }).then(function(data,status,headers,config)
                 {
                     console.log('join Service is succes');
+                    console.log(data);
                     return data;
                 }).catch(
                     function(data,status,headers,config){

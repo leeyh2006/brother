@@ -4,7 +4,8 @@ var pool            = require('../../src/dbCon.js');
 var passport        = require('passport');
 var KakaoStrategy   = require('passport-kakao').Strategy;
 var LocalStrategy   = require('passport-local').Strategy;
-var pbkdf2_password = require('pbkdf2-password ');
+var bkfd2Password  = require('pbkdf2-password');
+var hasher = bkfd2Password();
 
 /*
 passport.use('login-kakao',new KakaoStrategy({
@@ -18,43 +19,43 @@ passport.use('login-kakao',new KakaoStrategy({
     }
 ));*/
 
-
-
 /* passport Local 정보 셋팅 */
 passport.use(new LocalStrategy(
     function(username,password,done){
-        var salt = 'leeyonghee!@#!@$!@$';
-        var  userid  = username
-            ,userpw = sha256(password+salt);
+        var  userid  = username,
+             userpw  = password ;
         var sql =
-            "SELECT USERNAME," +
+            "SELECT USERID," +
             "       USERPW " +
             "  FROM USER  " +
             " WHERE USERID = ? " +
             "   AND USERPW = ? ";
-        pool.getConnection(function(err,connection){
-            var query= connection.query(sql,[userid,userpw],function(err,rows,fields){
-                if(err){
+        hasher(
+            {
+            password:userpw,
+            salt : '0B519F6F0DEA1103CF4E1A28DEEB2901549015300DBEA9467D904135AD4E244DBBA90A7A34E2E6FCED6D32215D45D8103909ADF1A1B5569A163A4BB52DE4A932'
+            }, function(err,pass,salt,hash){
+            pool.getConnection(function(err,connection){
+                var query= connection.query(sql,[userid,hash],function(err,rows,fields){
+                    if(err){
+                        connection.release();
+                        throw err;
+                    }
+                    if(rows[0].USERID !=undefined){
+                        console.log(query.sql);
+                        done(null, rows[0]);
+                    }
+                    else{
+                        console.log(err);
+                        done(null,false); //회원 정보가 없을시
+                    }
                     connection.release();
-                    throw err;
-                }
-                //사용자 맞을시
-                if(rows[0].USERNAME !=undefined){
-                    console.log(query.sql);
-                    console.log('rows[0]',rows[0]);
-                    done(null, rows[0]);
-                }
-                else{
-                    console.log(err);
-                    done(null,false); //회원 정보가 없을시
-                }
-                connection.release();
-            });
+                });
+            })
         });
         // done(null,false);
     }
 ));
-
 /*  passport local 로그인 */
 router.post(
     '/login',
@@ -70,15 +71,13 @@ router.post(
 
 passport.serializeUser(function(user,done){
     console.log('[serializeUser]', user);
-     done(null,user);
+    done(null,user);
 });
 
-
 // 다음 페이지에서 들어올때 정보 저장
-passport.deserializeUser(function(id,done){
-    console.log ('deserializeUser' ,id)
-     done(null,id);
-
+passport.deserializeUser(function(id, done) {
+    console.log('deserialize ', id);
+    done(null, id);
 });
 
 /*

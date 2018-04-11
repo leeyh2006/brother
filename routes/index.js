@@ -7,8 +7,7 @@ router.get('/', function(req, res, next) {
   var sendData ={};
   // console.log('req user' , req)
   if(req.user !=undefined){
-      sendData=req.user._json;
-      console.log(req.user._json);
+      console.log(req.user.USERID);
   }
   res.render('index', sendData);
 });

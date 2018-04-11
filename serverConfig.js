@@ -6,5 +6,6 @@ var dbConfig ={
     database:"brother"
 };
 
+var salt =
 module.exports= dbConfig;
 

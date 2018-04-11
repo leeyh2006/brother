@@ -7,27 +7,16 @@ var LocalStrategy   = require('passport-local').Strategy;
 var bkfd2Password  = require('pbkdf2-password');
 var hasher = bkfd2Password();
 
-/*
-passport.use('login-kakao',new KakaoStrategy({
-        clientID: '8a31ef866bfe1f9c93006c6bfda573f7',
-        callbackURL :'http://localhost:8080/login/oauth'
-    },
-    function (accesToken,refreshToken, profile, done) {
-        // console.log(profile);
-        return done(null,profile);
-
-    }
-));*/
-
 /* passport Local 정보 셋팅 */
 passport.use(new LocalStrategy(
     function(username,password,done){
         var  userid  = username,
              userpw  = password ;
         var sql =
-            "SELECT USERID," +
-            "       USERPW " +
-            "  FROM USER  " +
+            "SELECT USERID,    " +
+            "       USERPW,    " +
+            "       USERNAME   " +
+            "  FROM USER       " +
             " WHERE USERID = ? " +
             "   AND USERPW = ? ";
         hasher(
@@ -57,8 +46,7 @@ passport.use(new LocalStrategy(
     }
 ));
 /*  passport local 로그인 */
-router.post(
-    '/login',
+router.post('/login',
     passport.authenticate(
         'local',
         {
@@ -70,6 +58,15 @@ router.post(
     }
 );
 
+/* passpprt session 삭제 */
+router.post('/logOut',
+    function (req,res) {
+        req.logout(); //로그아웃
+        res.send({'isSuccess:': 'true'})
+    }
+);
+
+
 passport.serializeUser(function(user,done){
     console.log('[serializeUser]', user);
     done(null,user);
@@ -80,6 +77,21 @@ passport.deserializeUser(function(id, done) {
     console.log('[deserializeUser]', id);
     done(null, id);
 });
+
+
+
+/*
+passport.use('login-kakao',new KakaoStrategy({
+        clientID: '8a31ef866bfe1f9c93006c6bfda573f7',
+        callbackURL :'http://localhost:8080/login/oauth'
+    },
+    function (accesToken,refreshToken, profile, done) {
+        // console.log(profile);
+        return done(null,profile);
+
+    }
+));*/
+
 
 /*
 // 카카오 프로필 세션 저장

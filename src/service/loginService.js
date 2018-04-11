@@ -16,6 +16,21 @@ app.factory('loginService',function ($http) {
                         console.log('login Service error');
                     }
                 )
+            },
+        logOut:
+            function () {
+                return $http({
+                    method:'POST',
+                    url:'/login/logout'
+                }).then(function(data,status){
+                    console.log('[log out Service]' ,data.isSuccess);
+                    return data;
+                }).catch(
+                    function (data,status) {
+                        console.log('log Out');
+
+                    }
+                )
             }
     }
 });

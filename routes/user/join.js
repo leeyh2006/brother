@@ -4,16 +4,18 @@ var pool  = require('../../src/dbCon.js');
 var bkfd2Password  = require('pbkdf2-password');
 var hasher = bkfd2Password();
 
-var user = {
-    "USERID": '',
-    "USERPW": '',
-    "USERTEL":'',
-    "USERAD": ''
-};
 
 router.post('/join.json', function(req, res, next) {
+    var user = {
+        "USERID": '',
+        "USERPW": '',
+        "USERTEL":'',
+        "USERAD": '',
+        "USERNAME":''
+    };
     var receiveData = req.body;
     var sql2 = 'INSERT INTO USER SET ?';
+
     hasher
     (
         {
@@ -25,6 +27,7 @@ router.post('/join.json', function(req, res, next) {
             user.USERPW =hash;
             user.USERTEL=receiveData.userTel;
             user.USERAD =receiveData.userAd;
+            user.USERNAME = receiveData.userName;
 
             console.log('USERPW ' , user.USERPW);
             pool.getConnection(function(err,connection){
@@ -34,7 +37,11 @@ router.post('/join.json', function(req, res, next) {
                         throw err;
                     }
                     console.log(query.sql);
-                    res.send(rows);
+                    req.login(user,function(err){
+                        req.session.save(function(){
+                            res.send(rows);
+                        })
+                    })
                     connection.release();
                 });
             });

@@ -6,27 +6,10 @@ app.controller('joinController',['$scope' ,'$ngConfirm','joinService', function(
         userPw : $scope.userPw,
         userPwCheck: $scope.userPwCheck,
         userTel : $scope.userTel,
-        userAd : $scope.userAd
+        userAd : $scope.userAd,
+        userName :$scope.userName
     };
 
-    $scope.cancel =function(){
-        $ngConfirm({
-            title:false,
-            content:'회원가입을 취소하시겠습니까? ',
-            buttons: {
-                ok: {
-                    text: '아니오 계속 진행합니다.',
-                    // here the key 'something' will be used as the text.
-                },
-                cancel: {
-                    text: '취소 하겠습니다.', // Some Non-Alphanumeric characters
-                    action: function(){
-                        location.href='#!login';
-                    }
-                }
-            }
-        });
-    };
 
     $scope.join=function(){
         $ngConfirm(
@@ -39,7 +22,8 @@ app.controller('joinController',['$scope' ,'$ngConfirm','joinService', function(
                         action:function () {
                             joinService.join($scope.user).then(function(resultData){
                                 $scope.dataStr=resultData;
-                            });
+                                location.href='/';
+                        });
                         }
                     },
                     cancel:{
@@ -49,6 +33,26 @@ app.controller('joinController',['$scope' ,'$ngConfirm','joinService', function(
 
             }
         );
+
+        $scope.cancel =function(){
+            $ngConfirm({
+                title:false,
+                content:'회원가입을 취소하시겠습니까? ',
+                buttons: {
+                    ok: {
+                        text: '아니오 계속 진행합니다.',
+                        // here the key 'something' will be used as the text.
+                    },
+                    cancel: {
+                        text: '취소 하겠습니다.', // Some Non-Alphanumeric characters
+                        action: function(){
+                            location.href='#!login';
+                        }
+                    }
+                }
+            });
+        };
+
         console.log('join Service start');
     }
 }]);

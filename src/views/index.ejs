@@ -47,8 +47,10 @@
                 <% if(isSuccess == 'false'){%>
                     <a href="#!login" class="no-uline">로그인</a>
                 <%}else if (isSuccess == 'true') {%>
-                    <%= USERID %> 님 안녕하세요 <p></p>
-                    <a href="#!logout" class ="no-uline">로그아웃</a>
+                <strong><%= USERNAME %></strong> 님 안녕하세요
+                <div ng-controller="loginController">
+                    <button type="button" class="btn btn-primary" ng-click="logOut()">로그아웃</button>
+                </div>
                 <%}%>
 
             </form>

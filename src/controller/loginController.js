@@ -1,5 +1,5 @@
 
-app.controller('loginController',['$scope' ,'loginService', function($scope,loginService){
+app.controller('loginController',['$scope' ,'$ngConfirm','loginService', function($scope,$ngConfirm,loginService){
     $scope.user = {
         userId :$scope.username,
         userPw: $scope.password
@@ -19,8 +19,29 @@ app.controller('loginController',['$scope' ,'loginService', function($scope,logi
                 console.log('[CONTROLLER] LOGIN CONTROLLER RESULT =  ',resultData.data );
             }
         });
-
     };
+
+    $scope.logOut = function(){
+        $ngConfirm({
+            title:false,
+            content:'로그아웃 하시겠습니까? ',
+            buttons: {
+                ok: {
+                    text: '예',
+                    action: function(){
+                        loginService.logOut().then(function(resultData){
+                            console.log('[CONTROLLER] logOUT' );
+                            location.href='/'
+                        })
+                    }
+                },
+                cancel: {
+                    text: '아니오'
+                }
+            }
+        })
+
+    }
 }]);
 
 

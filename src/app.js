@@ -4,18 +4,14 @@ app.config(function ($routeProvider,$locationProvider) {
     $routeProvider
         .when('/login',
             {
-                templateUrl:'views/user/login.html'
+                templateUrl:'views/user/login.ejs'
             })
         .when('/join',
             {
-                templateUrl: 'views/user/join.html'
-            })
-        .when('/kakaoLogin/:code',
-            {
-                templateUrl:'views/index.html',
+                templateUrl: 'views/user/join.ejs'
             })
         .otherwise(
             {
-                templateUrl:'views/home.html'
+                templateUrl:'views/home.ejs',
             })
 });

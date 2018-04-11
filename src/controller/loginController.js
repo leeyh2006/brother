@@ -11,11 +11,12 @@ app.controller('loginController',['$scope' ,'loginService', function($scope,logi
         loginService.loginCheck($scope.user).then(function(resultData){
             if(resultData){
                 alert('로그인 성공');
-                console.log('[CONTROLLER] LOGIN CONTROLLER RESULT =  '+resultData.data );
+                console.log('[CONTROLLER] LOGIN CONTROLLER RESULT =  ',resultData.data );
+                location.href='/';
             }
             else {
                 alert('로그인 실패');
-                console.log('[CONTROLLER] LOGIN CONTROLLER RESULT =  '+resultData.data );
+                console.log('[CONTROLLER] LOGIN CONTROLLER RESULT =  ',resultData.data );
             }
         });
 
@@ -23,4 +24,3 @@ app.controller('loginController',['$scope' ,'loginService', function($scope,logi
 }]);
 
 
-console.log(sessionStorage.getItem("id"));

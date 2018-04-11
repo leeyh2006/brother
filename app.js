@@ -13,9 +13,9 @@ var app            = express();
 var cons           = require('consolidate');
 
 // view engine setup
-app.engine('html', cons.swig);
+// app.engine('html', cons.swig);
 app.set('views', path.join(__dirname, 'src/views'));
-app.set('view engine', 'html');
+app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));

@@ -9,7 +9,6 @@ app.factory('joinService',function ($http) {
                 }).then(function(data,status,headers,config)
                 {
                     console.log('join Service is succes');
-                    console.log(data);
                     return data;
                 }).catch(
                     function(data,status,headers,config){

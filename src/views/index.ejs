@@ -12,20 +12,15 @@
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
     <link rel="stylesheet" href="/assets/css/font.css">
     <link rel="stylesheet" href="/assets/css/angular-confirm.min.css">
-
     <script src="/assets/javascript/bootstrap.js"></script>
     <script src="/assets/javascript/angular-confirm.js"></script>
-
-
     <!-- Controller -->
     <script src="/controller/joinController.js"></script>
     <script src="/controller/loginController.js"></script>
     <!---->
-
     <!-- Service -->
     <script src="/service/loginService.js"></script>
     <script src="/service/joinService.js"></script>
-
 
 
 </head>
@@ -49,7 +44,13 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <a href="#!login" class="no-uline">로그인</a>
+                <% if(isSuccess == 'false'){%>
+                    <a href="#!login" class="no-uline">로그인</a>
+                <%}else if (isSuccess == 'true') {%>
+                    <%= USERID %> 님 안녕하세요 <p></p>
+                    <a href="#!logout" class ="no-uline">로그아웃</a>
+                <%}%>
+
             </form>
         </div>
     </nav>

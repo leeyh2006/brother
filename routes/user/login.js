@@ -41,7 +41,7 @@ passport.use(new LocalStrategy(
                         connection.release();
                         throw err;
                     }
-                    if(rows[0].USERID !=undefined){
+                    if(rows[0] !=undefined){
                         console.log(query.sql);
                         done(null, rows[0]);
                     }
@@ -62,11 +62,12 @@ router.post(
     passport.authenticate(
         'local',
         {
-            successRedirect:'/',
             failureRedirect:'/login'
         }
-    )
-
+    ),
+    function (req,res) {
+        res.send(req.user);
+    }
 );
 
 passport.serializeUser(function(user,done){
@@ -76,7 +77,7 @@ passport.serializeUser(function(user,done){
 
 // 다음 페이지에서 들어올때 정보 저장
 passport.deserializeUser(function(id, done) {
-    console.log('deserialize ', id);
+    console.log('[deserializeUser]', id);
     done(null, id);
 });
 

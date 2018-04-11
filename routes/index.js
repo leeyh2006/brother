@@ -4,12 +4,16 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  var sendData ={};
-  // console.log('req user' , req)
-  if(req.user !=undefined){
-      console.log(req.user.USERID);
-  }
-  res.render('index', sendData);
+    var sendData ={isSuccess : 'false' };
+
+    //로그인 성공시
+    if(req.user !=undefined){
+        req.user.isSuccess = 'true';
+        res.render('index',req.user);
+    }else{
+        res.render('index', sendData);
+    }
+
 });
 
 module.exports = router;

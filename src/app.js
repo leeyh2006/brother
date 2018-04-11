@@ -16,6 +16,11 @@ app.config(function ($routeProvider,$locationProvider) {
                 controller: 'boardController'
 
             })
+        .when('/boardInsert',
+            {
+                templateUrl:'views/board/form.ejs',
+                controller:'boardController'
+            })
         .otherwise(
             {
                 templateUrl:'views/home.ejs',

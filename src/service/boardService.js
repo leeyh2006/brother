@@ -8,7 +8,7 @@
     js : joinController.js
  */
 
-app.factory('boardService',function ($http,$log) {
+app.factory('boardService',function ($http) {
     return {
         Insert:
             function(sendData){
@@ -18,6 +18,7 @@ app.factory('boardService',function ($http,$log) {
                     data: sendData
                 }).then(function(data,status,headers,config)
                 {
+                    console.log('[boardService]' , data);
                     return data;
                 }).catch(
                     function(data,status,headers,config){

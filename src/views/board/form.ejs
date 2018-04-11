@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/test.css" rel="stylesheet" type="text/css">
+</head>
+<body ng-app="app">
+</br></br></br>
+<div ng-controller="boardController">
+    <div class="container">
+        <h2>글 쓰기 </h2>
+        <form role="form">
+            <input type="hidden" ng-model="board.boardNum"/>
+            <div class="form-group">
+                <label for="userName">이름</label>
+                <input type="text" class="form-control" id="userName" ng-model="board.userName" placeholder="이름을 입력하세요 ">
+            </div>
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" class="form-control" id="title" ng-model="board.title" placeholder="제목 입력하세요 ">
+            </div>
+            <div class="form-group">
+                <label for="content">내용 </label>
+                <textarea class="form-control" rows="5" ng-model="board.content"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="file" id="File">
+            </div>
+            <div style="text-align: left">
+                <button type="button" class="btn btn-primary" ng-click="Insert()">등록</button>
+                <button type="button" class="btn btn-danger" ng-click ="cancel()">취소</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

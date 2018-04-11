@@ -5,6 +5,9 @@
     <title>Title</title>
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link href="/assets/css/test.css" rel="stylesheet" type="text/css">
+
+    <script src="/controller/boardController.js"></script>
+    <script src="/service/boardService.js"></script>
 </head>
 <body ng-app="app">
 </br></br></br>
@@ -43,8 +46,8 @@
         </tbody>
     </table>
     <div style="text-align: left">
-        <button type="button" class="btn" ng-click="insert()">글쓰기 </button>
-        <button type="button" class="btn" ng-click="delete()">삭제</button>
+        <a href="#!boardInsert" class="btn btn-primary">글쓰기</a>
+        <a href="#!boardDelete" class="btn btn-danger">삭제</a>
     </div>
 </div>
 

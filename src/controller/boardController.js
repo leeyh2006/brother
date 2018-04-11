@@ -8,7 +8,34 @@
     js : boardController.js
  */
 
-app.controller('boardController',['$scope','$ngConfirm','$log','boardService',function($log,$scope,$ngConfirm,boardService){
-    console.log()
+app.controller('boardController',['$scope','$ngConfirm','boardService',function($scope,$ngConfirm,boardService){
+    $scope.board = {
+        boardNum: $scope.boardNum,
+        userName:$scope.userName,
+        title : $scope.title,
+        content: $scope.content
+    };
+
+    $scope.Insert= function () {
+        $ngConfirm({
+            title:false,
+            content:'등록하시겠습니까? ',
+            buttons: {
+                ok: {
+                    text: '예',
+                    action: function(){
+                        boardService.Insert($scope.board).then(function(resultData){
+                            console.log('[boardController] 글 등록 ' );
+                            console.log('result Data ' , resultData);
+                        })
+                    }
+                },
+                cancel: {
+                    text: '아니오'
+                }
+            }
+        })
+
+    }
 
 }]);

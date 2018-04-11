@@ -1,3 +1,12 @@
+/*
+    [회원가입 컨트롤러]
+    최초 등록일자 : 2018.04.11
+    최종 수정일자 : 2018.04.11
+    수정자 : 이용희
+    이메일 : yhlee@openit.co.kr
+    controller :  joinController
+    js : joinController.js
+ */
 
 app.controller('joinController',['$scope' ,'$ngConfirm','joinService', function($scope,$ngConfirm,joinService){
 

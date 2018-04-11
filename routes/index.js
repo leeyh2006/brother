@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-
+var logger = require('./logger.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
     var sendData ={isSuccess : 'false' };
-
+    logger.info('info','page Start!');
     //로그인 성공시
     if(req.user !=undefined){
         req.user.isSuccess = 'true';

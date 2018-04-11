@@ -14,14 +14,16 @@
     <link rel="stylesheet" href="/assets/css/angular-confirm.min.css">
     <script src="/assets/javascript/bootstrap.js"></script>
     <script src="/assets/javascript/angular-confirm.js"></script>
+
     <!-- Controller -->
     <script src="/controller/joinController.js"></script>
     <script src="/controller/loginController.js"></script>
-    <!---->
+    <script src="/controller/boardController.js"></script>
+
     <!-- Service -->
     <script src="/service/loginService.js"></script>
     <script src="/service/joinService.js"></script>
-
+    <script src="/service/boardService.js"></script>
 
 </head>
 <body ng-app="app">
@@ -37,7 +39,7 @@
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#!board">게시판</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#">Disabled</a>

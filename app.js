@@ -9,6 +9,7 @@ var passport       = require('passport');
 var index          = require('./routes/index');
 var login          = require('./routes/user/login');
 var join           = require('./routes/user/join');
+var board          = require('./routes/board/board');
 var app            = express();
 var cons           = require('consolidate');
 
@@ -41,6 +42,8 @@ app.use(passport.session());
 app.use('/', index);
 app.use('/login',login);
 app.use('/join',join);
+app.use('/board',board);
+
 
 // app.use('/oauth',oauth);
 

@@ -10,6 +10,12 @@ app.config(function ($routeProvider,$locationProvider) {
             {
                 templateUrl: 'views/user/join.ejs'
             })
+        .when('/board',
+            {
+                templateUrl:'views/board/list.ejs',
+                controller: 'boardController'
+
+            })
         .otherwise(
             {
                 templateUrl:'views/home.ejs',

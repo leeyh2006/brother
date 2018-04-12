@@ -39,7 +39,6 @@ app.controller('joinController',['$scope' ,'$ngConfirm','joinService', function(
                         text:'아니오',
                     }
                 }
-
             }
         );
 

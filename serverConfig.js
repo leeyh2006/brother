@@ -5,7 +5,5 @@ var dbConfig ={
     port: "3306",
     database:"brother"
 };
-
-var salt =
 module.exports= dbConfig;
 

@@ -21,11 +21,12 @@ app.controller('boardController',['$scope','$ngConfirm','boardService',function(
 
     //게시판 리스트 불러오기
     boardService.selectList().then(function (resultData) {
+
         $scope.pageSize = 10;
         $scope.totalCount = Math.ceil((resultData.data[0].TOTAL_COUNT)/$scope.pageSize) ;
         $scope.count= Array; // pagenavigation 을 위한 Array 설정
         $scope.boardList= resultData.data;
-        console.log('totalCount', $scope.totalCount);
+
         console.log('select List ',resultData.data);
     });
 
@@ -36,7 +37,10 @@ app.controller('boardController',['$scope','$ngConfirm','boardService',function(
             currentPage : currentPage
         };
         boardService.pageNavigation(sendData).then(function (resultData) {
-            console.log(resultData);
+            $scope.pageSize = 10;
+            $scope.totalCount = Math.ceil((resultData.data[0].TOTAL_COUNT)/$scope.pageSize) ;
+            $scope.count= Array; // pagenavigation 을 위한 Array 설정
+            $scope.boardList= resultData.data;
         })
     };
 
@@ -59,7 +63,6 @@ app.controller('boardController',['$scope','$ngConfirm','boardService',function(
                 }
             }
         })
-
     };
 
     $scope.cancel= function(){

@@ -29,7 +29,7 @@ app.factory('boardService',function ($http) {
         
         //게시판 리스트 
         selectList:
-            function(sendData){
+            function(){
                 return $http({
                     method :'POST',
                     url:'/board/selectList'

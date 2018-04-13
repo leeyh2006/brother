@@ -81,6 +81,11 @@ app.controller('boardController',['$scope','$ngConfirm','boardService',function(
                 }
             }
         })
+    };
+
+    $scope.selectDetail =function(){
+        location.href='#!detail';
+
     }
 
 }]);

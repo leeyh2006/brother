@@ -23,8 +23,6 @@ router.post('/selectList',function(req,res){
     else{
         currentPage = ((req.body.currentPage-1)*pageSize);
         endCurrentPage = currentPage+pageSize;
-        console.log('current page ' + currentPage);
-        console.log('endCurrentPage ' + endCurrentPage);
     }
     logger.info('receiveData' ,currentPage);
 
@@ -40,6 +38,7 @@ router.post('/selectList',function(req,res){
         "           (SELECT @ROWNUM :=0) R                      "+
         "     ) AA                                              "+
         "LIMIT ?,?                                             ";
+
     pool.getConnection(function(err,connection){
         var query= connection.query(sql,[currentPage,endCurrentPage],function(err,rows,field){
             if(err){
@@ -53,20 +52,6 @@ router.post('/selectList',function(req,res){
             connection.release();
         });
     });
-});
-
-router.post('/selectCount', function(req,res) {
-    var sql = 'SELECT COUNT(*) AS TOTAL_COUNT FROM BOARD ';
-    pool.getConnection(function (err, connection) {
-        var query = connection.query(sql, function (err, rows, field) {
-            if (err) {
-                connection.release();
-                throw err;
-            }
-            console.log(query.sql);
-            connection.release();
-        });
-    })
 });
 
 router.post('/Insert',function (req, res) {

@@ -60,7 +60,7 @@ router.post('/Insert',function (req, res) {
 
     console.log('BOARD INSERT' );
     var board= {
-        "NAME" :receiveData.userName,
+        "NAME" :req.user.USERNAME,
         "TITLE" : receiveData.title,
         "CONTENT": receiveData.content
     };
@@ -101,6 +101,37 @@ router.post('/selectDetail',function (req,res) {
         });
     });
 });
+router.post('/updateBoard',function(req,res){
+    var receiveData = req.body;
+    var boardData = {
+        "TITLE": receiveData.detailTitle,
+        "CONTENT":receiveData.detailContent
+    }
+    var boardNum = receiveData.boardNum;
+
+    var sql =
+        ' UPDATE  BOARD         ' +
+        '    SET  ?   ' +
+        '  WHERE  NUM = ?  ';
+
+    pool.getConnection(function(err,connection){
+        var query= connection.query(sql,[boardData,boardNum],function(err,rows,field){
+            if(err){
+                connection.release();
+                throw err;
+            }else{
+                console.log(query.sql);
+                res.send({
+                    isSuccess: 'true',
+                    msg :'수정 성공'
+                });
+            }
+            connection.release();
+        });
+    });
+
+});
+
 
 //게시글 삭제
 router.post('/deleteBoard',function (req,res) {

@@ -8,9 +8,11 @@
 
     <script src="/controller/boardController.js"></script>
     <script src="/service/boardService.js"></script>
+    <script src="/directive/directive.js"></script>
 </head>
 <body ng-app="app">
 </br></br></br>
+<my-link></my-link>
 <div ng-controller="boardController">
     <table class="table table-hover">
         <div style="text-align: right">
@@ -42,7 +44,6 @@
         <div class="modal fade" id="boardDetail" tabindex="-1" role="dialog" aria-labelledby="boardDetailTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-
                     <div class="modal-header">
                         <h5 class="modal-title" id="boardDetailTitle" >상세보기</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -53,22 +54,22 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="title">제목</label>
-                            <input type="text" class="form-control" id="userName" ng-model="detailTitle"/>
+                            <input type="text" class="form-control" id="userName" ng-model="board.title"/>
                         </div>
                         <div class="form-group">
                             <label for="name">작성자</label>
-                            <input type="text" class="form-control" id="userName" ng-model="detailName"/>
+                            <input type="text" class="form-control" id="userName" ng-model="board.userName"/>
                         </div>
                         <div class="form-group">
                             <label for="content">내용</label>
-                            <input type="text" class="form-control" id="userName" ng-model="detailContent"/>
+                            <textarea class="form-control" id="userName" ng-model="board.content"/>
                         </div>
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                        <button type="button" class="btn btn-primary">수정</button>
-                        <button type="button" class="btn btn-danger" ng-model="boardNum" ng-click="modal = deleteBoard(boardNum)" ng-class="">삭제</button>
+                        <button type="button" class="btn btn-primary" ng-model ="board.boardNum" ng-click =updateBoard(board.boardNum)>수정</button>
+                        <button type="button" id="modal" class="btn btn-danger" ng-model="board.boardNum" ng-click="modal = deleteBoard(board.boardNum)">삭제</button>
                     </div>
                 </div>
             </div>

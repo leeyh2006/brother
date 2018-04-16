@@ -12,15 +12,16 @@
 
 app.controller('boardController',['$scope','$ngConfirm','boardService',function($scope,$ngConfirm,boardService){
 
+    // 게시글 등록
+    $scope.board = {
+        boardNum: $scope.boardNum,
+        userName:$scope.userName,
+        title : $scope.title,
+        content: $scope.content
+    };
+
     //글쓰기
     $scope.Insert= function () {
-        // 게시글 등록
-        $scope.board = {
-            boardNum: $scope.boardNum,
-            userName:$scope.userName,
-            title : $scope.title,
-            content: $scope.content
-        };
         $ngConfirm({
             title:false,
             content:'등록하시겠습니까? ',
@@ -52,6 +53,36 @@ app.controller('boardController',['$scope','$ngConfirm','boardService',function(
         console.log('select List ',resultData.data);
     });
 
+    $scope.updateBoard = function(boardNum){
+        var sendData = {
+            boardNum : boardNum,
+            detailTitle : $scope.board.title,
+            detailContent : $scope.board.content
+        };
+        $ngConfirm({
+            title:false,
+            content:'수정 하시겠습니까?',
+            buttons: {
+                ok: {
+                    text: '예',
+                    action: function(){
+                        boardService.updateBoard(sendData).then(function(resultData){
+                            if(resultData.data.isSuccess =='true'){
+                                $('.modal-backdrop').hide();
+                                location.href='#!board';
+                            }
+                            else{
+                                location.href='#!board';
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: '아니오'
+                }
+            }
+        })
+    };
     //게시글 삭제
     $scope.deleteBoard= function(boardNum){
         var sendData = {
@@ -67,13 +98,10 @@ app.controller('boardController',['$scope','$ngConfirm','boardService',function(
                     action: function(){
                         boardService.deleteBoard(sendData).then(function(resultData){
                             if(resultData.data.isSuccess =='true'){
-                                alert('삭제 성공');
+                                $('.modal-backdrop').hide();
                                 location.href='#!board';
-                                return true;
-
                             }
                             else{
-                                alert('삭제 실패');
                                 location.href='#!board';
                             }
                         });
@@ -85,6 +113,7 @@ app.controller('boardController',['$scope','$ngConfirm','boardService',function(
             }
         })
     };
+
     //상세보기
     $scope.selectBoardDetail = function(boardNum){
         var sendData = {
@@ -93,10 +122,10 @@ app.controller('boardController',['$scope','$ngConfirm','boardService',function(
 
         boardService.selectBoardDetail(sendData).then(function(resultData){
             console.log('[BOARD CONTROLLER] resultDATA' , resultData.data[0]);
-            $scope.boardNum = resultData.data[0].num;
-            $scope.detailTitle= resultData.data[0].title;
-            $scope.detailName = resultData.data[0].name;
-            $scope.detailContent= resultData.data[0].content;
+            $scope.board.boardNum = resultData.data[0].num;
+            $scope.board.title= resultData.data[0].title;
+            $scope.board.userName = resultData.data[0].name;
+            $scope.board.content= resultData.data[0].content;
 
 
         });

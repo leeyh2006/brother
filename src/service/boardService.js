@@ -92,6 +92,23 @@ app.factory('boardService',function ($http) {
                         console.log('success');
                     }
                 })
+            },
+        updateBoard:
+            function (sendData) {
+                return $http({
+                    method:'POST',
+                    url:'/board/updateBoard',
+                    data:sendData
+
+                }).then(function(data,status){
+                    console.log('[BOARD SERVICE] update board',data);
+                    return data;
+
+                }).catch(function(data,status){
+                    if(status==200){
+                        console.log('success');
+                    }
+                })
             }
 
     }

@@ -15,11 +15,6 @@ app.config(function ($routeProvider,$locationProvider) {
                 templateUrl:'views/board/list.ejs',
                 controller: 'boardController'
             })
-        .when('/detail',
-            {
-                templateUrl:'views/board/detail.ejs',
-                controller:'boardController'
-            })
         .when('/boardInsert',
             {
                 templateUrl:'views/board/form.ejs',

@@ -26,8 +26,8 @@ app.factory('boardService',function ($http) {
                     }
                 )
             },
-        
-        //게시판 리스트 
+
+        //게시판 리스트
         selectList:
             function(){
                 return $http({
@@ -44,7 +44,6 @@ app.factory('boardService',function ($http) {
         //페이징
         pageNavigation:
             function(sendData){
-            console.log('[BOARD SERVICE] sendData ',sendData);
                 return $http({
                     method:'POST',
                     url:'/board/selectList',
@@ -58,6 +57,41 @@ app.factory('boardService',function ($http) {
                         console.log('[BOARD SERVICE] pageNavigation DATA GET ERROR' );
                     }
                 )
+            },
+
+        //상세보기
+        selectBoardDetail:
+            function (sendData) {
+                console.log('[BOARD SERIVCE ]', sendData);
+                return $http({
+                    method:'POST',
+                    url:'/board/selectDetail',
+                    data: sendData
+                }).then(function (data,status) {
+                    console.log('[BOARD SERVICE] selectDetail',data);
+                    return data;
+                }).catch(
+                    function (data,status) {
+                        console.log('[BOARD SERVICE] select detail ');
+                    }
+                )
+            },
+
+        //게시글 삭제
+        deleteBoard :
+            function(sendData){
+                return $http({
+                    method:'POST',
+                    url:'/board/deleteBoard',
+                    data:sendData
+                }).then(function(data,status){
+                    console.log('[BOARD SERVICE] delete board' ,data);
+                    return data;
+                }).catch(function(data,status){
+                    if(status ==200){
+                        console.log('success');
+                    }
+                })
             }
 
     }

@@ -30,8 +30,13 @@ app.controller('joinController',['$scope' ,'$ngConfirm','joinService', function(
                         text:'예',
                         action:function () {
                             joinService.join($scope.user).then(function(resultData){
-                                $scope.dataStr=resultData;
-                                location.href='/';
+                                if(resultData.data.isSuccess == 'fail'){
+                                    alert('아이디 중복');
+                                }
+                                else {
+                                    alert('회원가입 성공');
+                                    location.href='/';
+                                }
                         });
                         }
                     },

@@ -3,6 +3,7 @@ var router = express.Router();
 var pool  = require('../../src/dbCon.js');
 var logger = require('../logger.js');
 
+
 router.get('/board',function(req,res){
 
 
@@ -37,7 +38,7 @@ router.post('/selectList',function(req,res){
         "           BOARD,                                      "+
         "           (SELECT @ROWNUM :=0) R                      "+
         "     ) AA                                              "+
-        "LIMIT ?,?                                             ";
+        "LIMIT ?,?                                              ";
 
     pool.getConnection(function(err,connection){
         var query= connection.query(sql,[currentPage,endCurrentPage],function(err,rows,field){
@@ -73,6 +74,56 @@ router.post('/Insert',function (req, res) {
                 throw err;
             }
             console.log(query.sql);
+            connection.release();
+        });
+    });
+});
+
+//게시판 상세보기
+router.post('/selectDetail',function (req,res) {
+    var receiveData = req.body;
+    var boardNum = receiveData.boardNum;
+    var sql =
+        '  SELECT  *       ' +
+        '    FROM  BOARD    ' +
+        '   WHERE  NUM = ?  ';
+    pool.getConnection(function(err,connection){
+        var query= connection.query(sql,[boardNum],function(err,rows,field){
+            if(err){
+                connection.release();
+                throw err;
+            }else{
+                console.log(query.sql);
+                console.log('[BOARD DETAIL] ', rows);
+                res.send(rows);
+            }
+            connection.release();
+        });
+    });
+});
+
+//게시글 삭제
+router.post('/deleteBoard',function (req,res) {
+    var receiveData = req.body;
+    var boardNum = receiveData.boardNum;
+
+    console.log('[DELETE BOARD]  boardNum', boardNum);
+    var sql =
+        ' DELETE         ' +
+        '   FROM  BOARD    ' +
+        '  WHERE  NUM = ?  ';
+
+    pool.getConnection(function(err,connection){
+        var query= connection.query(sql,[boardNum],function(err,rows,field){
+            if(err){
+                connection.release();
+                throw err;
+            }else{
+                res.send({
+                    isSuccess: 'true',
+                    msg :'삭제 성공'
+                });
+            }
             connection.release();
         });
     });

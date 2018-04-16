@@ -1,6 +1,5 @@
 var mysql= require('mysql');
-var db_config = require('../serverConfig.js');
-
+var db_config = require('../serverConfig.js')().dbConfig;
 
 var pool = mysql.createPool(
     {
@@ -12,4 +11,6 @@ var pool = mysql.createPool(
         waitForConnections:false
     }
 );
+
 module.exports=pool;
+

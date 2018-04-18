@@ -4,11 +4,6 @@ var pool  = require('../../src/dbCon.js');
 var logger = require('../logger.js');
 
 
-router.get('/board',function(req,res){
-
-
-});
-
 // 게시판 리스트 불러오기
 router.post('/selectList',function(req,res){
     var sendData ={};
@@ -22,8 +17,8 @@ router.post('/selectList',function(req,res){
         endCurrentPage= pageSize;
     }
     else{
-        currentPage = ((req.body.currentPage-1)*pageSize);
-        endCurrentPage = currentPage+pageSize;
+        currentPage = ((req.body.currentPage-1)*pageSize)+1;
+        endCurrentPage = currentPage+pageSize-1;
     }
     logger.info('receiveData' ,currentPage);
 
@@ -38,7 +33,7 @@ router.post('/selectList',function(req,res){
         "           BOARD,                                      "+
         "           (SELECT @ROWNUM :=0) R                      "+
         "     ) AA                                              "+
-        "LIMIT ?,?                                              ";
+        "WHERE ROWNUM BETWEEN ? AND ?                           ";
 
     pool.getConnection(function(err,connection){
         var query= connection.query(sql,[currentPage,endCurrentPage],function(err,rows,field){
@@ -106,13 +101,13 @@ router.post('/updateBoard',function(req,res){
     var boardData = {
         "TITLE": receiveData.detailTitle,
         "CONTENT":receiveData.detailContent
-    }
+    };
     var boardNum = receiveData.boardNum;
 
     var sql =
-        ' UPDATE  BOARD         ' +
-        '    SET  ?   ' +
-        '  WHERE  NUM = ?  ';
+        ' UPDATE  BOARD         '+
+        '    SET  ?             '+
+        '  WHERE  NUM = ?       ';
 
     pool.getConnection(function(err,connection){
         var query= connection.query(sql,[boardData,boardNum],function(err,rows,field){
@@ -129,9 +124,7 @@ router.post('/updateBoard',function(req,res){
             connection.release();
         });
     });
-
 });
-
 
 //게시글 삭제
 router.post('/deleteBoard',function (req,res) {

@@ -13,15 +13,28 @@ app.config(function ($routeProvider,$locationProvider) {
         .when('/board',
             {
                 templateUrl:'views/board/list.ejs',
-                controller: 'boardController'
+                controller:'boardController',
+                resolve:
+                    {
+                        "data":
+                            ['$http',function($http){
+                                return $http({
+                                    method: 'POST',
+                                    url :'/auth/check'
+                                }).then(
+                                    function (resp){
+                                        return resp.data
+                                    })
+                            }]
+                    }
+
             })
         .when('/boardInsert',
             {
-                templateUrl:'views/board/form.ejs',
-                controller:'boardController'
+                templateUrl:'views/board/form.ejs'
             })
         .otherwise(
             {
-                templateUrl:'views/home.ejs',
+                templateUrl:'views/home.ejs'
             })
 });

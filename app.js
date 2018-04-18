@@ -10,6 +10,7 @@ var index          = require('./routes/index');
 var login          = require('./routes/user/login');
 var join           = require('./routes/user/join');
 var board          = require('./routes/board/board');
+var auth           = require('./routes/auth/auth');
 var app            = express();
 var cons           = require('consolidate');
 
@@ -34,7 +35,7 @@ app.use(session({
     },
     resave: true,
     saveUninitialized: true
-}))
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -43,6 +44,7 @@ app.use('/', index);
 app.use('/login',login);
 app.use('/join',join);
 app.use('/board',board);
+app.use('/auth',auth);
 
 
 // app.use('/oauth',oauth);

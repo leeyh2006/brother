@@ -10,7 +10,24 @@
     수정 내용 (2018.04.12) : 페이징 추가
  */
 
-app.controller('boardController',['$scope','$ngConfirm','boardService',function($scope,$ngConfirm,boardService){
+app.controller('boardController',['$scope','$ngConfirm','boardService','data',function($scope,$ngConfirm,boardService,data){
+    console.log('data' ,data);
+    if(data.isSuccess =='fail'){
+        alert('로그인 하세요');
+        location.href='#!login';
+    }
+    else{
+        //게시판 리스트 불러오기
+        boardService.selectList().then(function (resultData) {
+            $scope.pageSize = 10;
+            $scope.totalCount = Math.ceil((resultData.data[0].TOTAL_COUNT)/$scope.pageSize) ;
+            $scope.count= Array; // pagenavigation 을 위한 Array 설정
+            $scope.boardList= resultData.data;
+
+            console.log('$scope.totalCount' , $scope.totalCount);
+            console.log('select List ',resultData.data);
+        });
+    }
 
     // 게시글 등록
     $scope.board = {
@@ -42,16 +59,7 @@ app.controller('boardController',['$scope','$ngConfirm','boardService',function(
         })
     };
 
-    //게시판 리스트 불러오기
-    boardService.selectList().then(function (resultData) {
 
-        $scope.pageSize = 10;
-        $scope.totalCount = Math.ceil((resultData.data[0].TOTAL_COUNT)/$scope.pageSize) ;
-        $scope.count= Array; // pagenavigation 을 위한 Array 설정
-        $scope.boardList= resultData.data;
-
-        console.log('select List ',resultData.data);
-    });
 
     $scope.updateBoard = function(boardNum){
         var sendData = {
@@ -68,7 +76,7 @@ app.controller('boardController',['$scope','$ngConfirm','boardService',function(
                     action: function(){
                         boardService.updateBoard(sendData).then(function(resultData){
                             if(resultData.data.isSuccess =='true'){
-                                $('.modal-backdrop').hide();
+                                // $('.modal-backdrop').hide();
                                 location.href='#!board';
                             }
                             else{
@@ -98,7 +106,7 @@ app.controller('boardController',['$scope','$ngConfirm','boardService',function(
                     action: function(){
                         boardService.deleteBoard(sendData).then(function(resultData){
                             if(resultData.data.isSuccess =='true'){
-                                $('.modal-backdrop').hide();
+                                // $('.modal-backdrop').hide();
                                 location.href='#!board';
                             }
                             else{
@@ -131,7 +139,8 @@ app.controller('boardController',['$scope','$ngConfirm','boardService',function(
         });
     };
     //페이징 처리
-    $scope.pageNavigation=function(currentPage){
+    $scope.pageNavigation=function(currentPage,nextPage){
+
         console.log('currentPage' , currentPage);
         var sendData = {
             currentPage : currentPage
@@ -140,6 +149,8 @@ app.controller('boardController',['$scope','$ngConfirm','boardService',function(
             $scope.pageSize = 10;
             $scope.totalCount = Math.ceil((resultData.data[0].TOTAL_COUNT)/$scope.pageSize) ;
             $scope.count= Array; // pagenavigation 을 위한 Array 설정
+
+
             $scope.boardList= resultData.data;
         })
     };

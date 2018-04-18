@@ -9,23 +9,32 @@
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 
     <script src="app.js"></script>
+
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
     <link rel="stylesheet" href="/assets/css/font.css">
     <link rel="stylesheet" href="/assets/css/angular-confirm.min.css">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    <!-- Theme style  -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+
     <script src="/assets/javascript/bootstrap.js"></script>
     <script src="/assets/javascript/angular-confirm.js"></script>
+    <!-- Modernizr JS -->
+    <!--<script src="/assets/javascript/modernizr-2.6.2.min.js"></script>-->
 
     <!-- Controller -->
-    <script src="/controller/joinController.js"></script>
-    <script src="/controller/loginController.js"></script>
-    <script src="/controller/boardController.js"></script>
-    <script src="/controller/authController.js"></script>
+    <script src="/controller/JoinController.js"></script>
+    <script src="/controller/LoginController.js"></script>
+    <script src="/controller/BoardController.js"></script>
+    <script src="/controller/AuthController.js"></script>
 
     <!-- Service -->
-    <script src="/service/loginService.js"></script>
-    <script src="/service/joinService.js"></script>
-    <script src="/service/boardService.js"></script>
-    <script src="/service/authService.js"></script>
+    <script src="/service/LoginService.js"></script>
+    <script src="/service/JoinService.js"></script>
+    <script src="/service/BoardService.js"></script>
+    <script src="/service/AuthService.js"></script>
 
     <!--Filter-->
     <script src="/filter/boardFilter.js"></script>
@@ -47,7 +56,7 @@
                     <a class="nav-link" href="#!board">게시판</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
+                    <a class="nav-link " href="#!patent">특허등록</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -55,7 +64,7 @@
                     <a href="#!login" class="no-uline">로그인</a>
                 <%}else if (isSuccess == 'true') {%>
                 <strong><%= USERNAME %></strong> 님 안녕하세요
-                <div ng-controller="loginController">
+                <div ng-controller="LoginController">
                     <button type="button" class="btn btn-primary" ng-click="logOut()">로그아웃</button>
                 </div>
                 <%}%>

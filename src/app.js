@@ -13,7 +13,7 @@ app.config(function ($routeProvider,$locationProvider) {
         .when('/board',
             {
                 templateUrl:'views/board/list.ejs',
-                controller:'boardController',
+                controller:'BoardController',
                 resolve:
                     {
                         "data":
@@ -31,7 +31,19 @@ app.config(function ($routeProvider,$locationProvider) {
             })
         .when('/boardInsert',
             {
-                templateUrl:'views/board/form.ejs'
+                templateUrl:'views/board/form.ejs',
+                controller: 'BoardController',
+                resolve:{
+                    "data" :function () {
+                        return false;
+                        }
+                    }
+
+            })
+        .when('/patent',
+            {
+                templateUrl:'views/patent/list.ejs'
+
             })
         .otherwise(
             {

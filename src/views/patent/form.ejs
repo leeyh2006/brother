@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/test.css" rel="stylesheet" type="text/css">
+</head>
+<body ng-app="app">
+</br></br></br>
+<div>
+    <div class="container">
+        <h2>아이디어 등록</h2>
+        <form role="form" enctype="multipart/form-data">
+            <div ng-controller="PatentController">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="title">제목</label>
+                        <input type="email" class="form-control" id="title" ng-model="patent.title" placeholder="제목을 입력하세요">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="userName">작성자</label>
+                        <input type="text" class="form-control" id="userName" ng-model="patent.userName" placeholder="작성자">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="type">구분</label>
+                        <select id="type" class="form-control" ng-model="patent.type">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="content">내용 </label>
+                    <textarea class="form-control" rows="5" ng-model="patent.content"></textarea>
+                </div>
+                <input type="file"  ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+                    <img ng-show="form.file.$valid" ngf-thumbnail="picFile">
+                <button ng-click="picFile = null" ng-show="picFile">Remove</button>
+                <div style="text-align: left">
+                    <button type="button" class="btn btn-primary" ng-click="insertPatent(picFile)">등록</button>
+                    <button type="button" class="btn btn-danger" ng-click ="cancel()">취소</button>
+                </div>
+            </div>
+        </form>
+    </div>=
+</div>
+</body>
+</html>

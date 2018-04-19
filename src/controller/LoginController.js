@@ -1,3 +1,12 @@
+/*
+    [게시판 컨트롤러]
+    최초 등록일자 : 2018.04.11
+    최종 수정일자 : 2018.04.11
+    수정자 : 이용희
+    이메일 : yhlee@openit.co.kr
+    controller :  loginController
+    js : loginController.js
+ */
 
 app.controller('LoginController',['$scope' ,'$ngConfirm','loginService', function($scope,$ngConfirm,loginService){
     $scope.user = {

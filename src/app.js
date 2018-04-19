@@ -1,6 +1,6 @@
-var app = angular.module('app',['ngRoute','cp.ngConfirm']);
+var app = angular.module('app',['ngFileUpload','ngRoute','cp.ngConfirm']);
 
-app.config(function ($routeProvider,$locationProvider) {
+app.config(function ($routeProvider,$locationProvider ) {
     $routeProvider
         .when('/login',
             {
@@ -44,6 +44,10 @@ app.config(function ($routeProvider,$locationProvider) {
             {
                 templateUrl:'views/patent/list.ejs'
 
+            })
+        .when('/patentForm',
+            {
+                templateUrl:'views/patent/form.ejs'
             })
         .otherwise(
             {

@@ -11,6 +11,9 @@ var login          = require('./routes/user/login');
 var join           = require('./routes/user/join');
 var board          = require('./routes/board/board');
 var auth           = require('./routes/auth/auth');
+var patent         = require('./routes/patent/patent');
+var multipart      = require('connect-multiparty');
+var serverConfig   = require('./serverConfig.js');
 var app            = express();
 var cons           = require('consolidate');
 
@@ -26,6 +29,12 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname,'src')));
+
+
+app.use(multipart({
+    uploadDir: serverConfig().img.url
+}));
+
 
 app.use(session({
     key:'sid',
@@ -45,6 +54,7 @@ app.use('/login',login);
 app.use('/join',join);
 app.use('/board',board);
 app.use('/auth',auth);
+app.use('/patent',patent);
 
 
 // app.use('/oauth',oauth);

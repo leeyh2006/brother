@@ -1,3 +1,14 @@
+/*
+    [로그인 서비스]
+    최초 등록일자 : 2018.04.11
+    최종 수정일자 : 2018.04.12
+    수정자 : 이용희
+    이메일 : yhlee@openit.co.kr
+    service :  LoginService
+    js : LoginService.js
+ */
+
+
 app.factory('loginService',function ($http) {
     return {
         loginCheck:

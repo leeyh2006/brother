@@ -1,10 +1,10 @@
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" >
 </head>
-<body>
+<body ng-app="app">
+<div>
     <div id="fh5co-work">
         <div class="container">
             <div class="row top-line animate-box">
@@ -12,7 +12,8 @@
                     <h2>Register Your Patent<span class="fh5co-highlight">Made with <i class="icon-heart2"></i> by YONG</span></h2>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary"> 등록하기 </button>
+                    <a class="btn btn-primary" href="#!patentForm">등록하기</a>
+                    <!--<button type="button" class="btn btn-primary" ng-click="insertPatent()"> 등록하기 </button>-->
                 </div>
             </div>
 
@@ -132,5 +133,7 @@
             </div>
         </div>
     </div>
+</div>
+
 </body>
 </html>
